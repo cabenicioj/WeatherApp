@@ -13,13 +13,13 @@ public class EstacionMeteorologica extends Observable implements Observer {
 
     public EstacionMeteorologica() {
         this.historial = new ArrayList<>();
-        // Iniciamos el servicio como dice la consigna
+        // inicia el servicio
         this.service = new WeatherService(City.Junin, 5);
         this.service.addObserver(this);
         this.service.start();
     }
 
-    // Este es el metodo que escucha al servicio cada 5 segundos
+    // metodo q escucha al servicio
     @Override
     public void update(Observable weather, Object param) {
         Clima clima = ((WeatherService)weather).getClima();
@@ -27,12 +27,12 @@ public class EstacionMeteorologica extends Observable implements Observer {
         this.climaActual = clima;
         this.historial.add(clima);
 
-        // Avisamos a la interfaz que llegaron nuevos datos
+        // esto avisa q hay nuevos datos
         setChanged();
         notifyObservers();
     }
 
-    // Métodos para los botones de la IU
+    // metodos para los botones de iu
     public void limpiarHistorial() {
         historial.clear();
         setChanged();
@@ -51,7 +51,6 @@ public class EstacionMeteorologica extends Observable implements Observer {
         notifyObservers();
     }
 
-    // Getters para que la ventana pueda leer la info y mostrarla
     public List<Clima> getHistorial() {
         return historial;
     }
@@ -60,7 +59,7 @@ public class EstacionMeteorologica extends Observable implements Observer {
         return climaActual;
     }
 
-    // Metodo extra útil por si cerrás la ventana y querés apagar el servicio
+    // metodo extra por si se cierra la ventana y quiero apagar el servicio
     public void apagarServicio() {
         service.stop();
         service.deleteObserver(this);

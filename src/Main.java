@@ -4,13 +4,13 @@ import model.EstacionMeteorologica;
 public class Main {
     public static void main(String[] args) {
 
-        // 1. Creamos el Cerebro/Modelo (Esto por dentro enciende el WeatherService y el reloj)
+        // creamos el cerebro/modelo (enciende weatherservice y el reloj)
         EstacionMeteorologica modelo = new EstacionMeteorologica();
 
-        // 2. Creamos la Vista (La ventana) y le pasamos el cerebro para que lo escuche
+        // creamos la vista/ventana y le pasamos el modelo
         VentanaPrincipal ventana = new VentanaPrincipal(modelo);
 
-        // 3. ¡Prendemos la pantalla!
+        //prende la pantalla
         ventana.setVisible(true);
 
     }

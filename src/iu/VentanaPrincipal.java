@@ -13,7 +13,6 @@ import java.util.Observer;
 
 @SuppressWarnings("deprecation")
 public class VentanaPrincipal extends JFrame implements Observer {
-    // Ventana de arranque, va a implementar Observer(para que se actualice sola cuando el Modelo cambie).
 
     private final EstacionMeteorologica model;
 
@@ -24,7 +23,7 @@ public class VentanaPrincipal extends JFrame implements Observer {
 
     public VentanaPrincipal(EstacionMeteorologica model) {
         this.model = model;
-        this.model.addObserver(this); // ¡Nos suscribimos para escuchar los cambios!
+        this.model.addObserver(this); // "escuchamos" cambios
 
         configurarVentana();
         inicializarComponentes();
@@ -36,8 +35,8 @@ public class VentanaPrincipal extends JFrame implements Observer {
         setTitle("Estación Meteorológica");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centra la ventana en la pantalla
-        setLayout(new BorderLayout()); // Layout principal
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
     }
 
     private void inicializarComponentes() {
@@ -53,18 +52,15 @@ public class VentanaPrincipal extends JFrame implements Observer {
     }
 
     private void armarLayout() {
-        // 1. ARRIBA (Norte): La temperatura
         JPanel panelNorte = new JPanel();
         panelNorte.add(lblTemperaturaActual);
         add(panelNorte, BorderLayout.NORTH);
 
-        // 2. CENTRO: El historial con una barra de scroll
         JScrollPane scrollCentro = new JScrollPane(listaHistorial);
         add(scrollCentro, BorderLayout.CENTER);
 
-        // 3. IZQUIERDA (Oeste): Los botones
         JPanel panelOeste = new JPanel();
-        panelOeste.setLayout(new GridLayout(3, 1, 5, 5)); // 3 filas, 1 columna
+        panelOeste.setLayout(new GridLayout(3, 1, 5, 5));
         panelOeste.add(btnTemp);
         panelOeste.add(btnDate);
         panelOeste.add(btnClean);
@@ -72,15 +68,15 @@ public class VentanaPrincipal extends JFrame implements Observer {
     }
 
     private void configurarEventos() {
-        // Evento para limpiar
+        //limpia
         btnClean.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.limpiarHistorial(); // El controlador avisa al modelo
+                model.limpiarHistorial(); // controlador avisa al modelo
             }
         });
 
-        // Evento para ordenar por temperatura
+        //ordenar por temperatura
         btnTemp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,7 +84,7 @@ public class VentanaPrincipal extends JFrame implements Observer {
             }
         });
 
-        // Evento para ordenar por fecha
+        //ordenar por fecha
         btnDate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,18 +92,17 @@ public class VentanaPrincipal extends JFrame implements Observer {
             }
         });
 
-        // Evento para el DOBLE CLIC en la lista
+        // para el doble clic en la lista
         listaHistorial.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    // Obtenemos el elemento seleccionado
+                    // obtenie elemento seleccionado
                     int index = listaHistorial.locationToIndex(e.getPoint());
                     if (index >= 0) {
-                        // Sin el casteo, limpio y directo
+
                         Clima climaSeleccionado = modeloLista.getElementAt(index);
 
-                        // Ahora sí se lo mandamos a la VentanaDetalle y Java es feliz
                         VentanaDetalle detalle = new VentanaDetalle(climaSeleccionado);
                         detalle.setVisible(true);
                     }
