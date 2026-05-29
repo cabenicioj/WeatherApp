@@ -10,7 +10,7 @@ public class Main {
         // creamos la vista/ventana y le pasamos el modelo
         VentanaPrincipal ventana = new VentanaPrincipal(modelo);
 
-        //prende la pantalla
+        // prende la pantalla
         ventana.setVisible(true);
 
     }
